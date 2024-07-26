@@ -74,5 +74,14 @@ export class ShorturlsServices {
         console.log("Error al intentar editar la url" , error);
       }
     }
+
+    static async getShortUrlByCodeUrl(codeUrl){
+      try {
+        const shortUrl = await Urls.findOne({codeUrl: codeUrl});
+        return shortUrl
+      } catch (error) {
+        console.log("Error al intentar obtener la url por el codigo" , error);
+      }
+    }
   
   } 

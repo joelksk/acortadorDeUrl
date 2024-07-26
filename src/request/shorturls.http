@@ -1,8 +1,12 @@
 ### Recuperar todos los shorturls
 GET http://localhost:1235/api/shorturls
 
-### Un shorturls por Id
-GET http://localhost:1235/api/shorturls/66a1ad05dbfb58951a0daa80
+### recuperar una URL por Id
+GET http://localhost:1235/api/shorturls/66a2d65822d85789021ff879
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imtza3BsdXNzIiwiaWQiOiI2NmExYzliNTMwZDgyZDU5NGJmZjljMWMiLCJpYXQiOjE3MjIwMDU2Njh9.q-1CJvIh064XbyFSh5zPqnvCpp0XMFyqOe-MPNeyLbI
+
+###Redirection to original URL
+GET http://localhost:1235/api/shorturls/redirect/0fb7d663187f
 
 ### Crear una shorturls
 POST http://localhost:1235/api/shorturls
@@ -16,8 +20,9 @@ Content-Type: application/json
 ### Editar una url
 PUT http://localhost:1235/api/shorturls/66a1ad05dbfb58951a0daa80
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imtza3BsdXNzIiwiaWQiOiI2NmExYzliNTMwZDgyZDU5NGJmZjljMWMiLCJpYXQiOjE3MjIwMDU2Njh9.q-1CJvIh064XbyFSh5zPqnvCpp0XMFyqOe-MPNeyLbI
 
 {
-   "countClick": 10,
+   "countClick": 100,
    "isPublic": true
 }

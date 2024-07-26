@@ -12,12 +12,26 @@ export class ShorturlsController {
   static async getShortUrlById(req, res) {
     const { id } = req.params;
     const url = await ShorturlsServices.getShortUrlById(id);
-    if (url) return res.redirect(url.originalUrl);
-
+    if (url) {
+      return res.json(url)
+    }
     res.status(404).json({ message: "url not found" });
   }
 
-  static async createNewshorturl(req, res) {
+  static async redirectToOriginalUrl(req, res){
+    const {codeUrl} = req.params
+    const shortUrl = await ShorturlsServices.getShortUrlByCodeUrl(codeUrl)
+    if(shortUrl){
+      const urlEdited = {countClick: shortUrl.countClick+1}
+      await ShorturlsServices.updateShorturl(shortUrl, urlEdited);
+      return res.redirect(shortUrl.originalUrl);
+    }
+    else{
+      return res.status(404).json({ message: "Url not found"})
+    }
+  }
+
+  static async createNewShorturl(req, res) {
     const result = validateShorturl(req.body);
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });;

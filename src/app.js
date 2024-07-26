@@ -1,5 +1,6 @@
 import express, { json } from 'express';
 import { shorturlsRouter } from './routes/shorturls.js';
+import {Middleware} from './middlewares/middleware.js'
 import {userRouter} from './routes/user.js';
 import {loginRouter} from './routes/login.js';
 import {corsMiddleware} from './middlewares/cors.js'
