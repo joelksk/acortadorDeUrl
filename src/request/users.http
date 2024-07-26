@@ -1,0 +1,15 @@
+### Recuperar todos los usuarios
+GET http://localhost:1235/api/users
+
+### Crear un usuario
+POST http://localhost:1235/api/users
+Content-Type: application/json
+
+{
+  "username": "kskpluss",
+  "email": "kskpluss@gmail.com",
+  "password": "ksk123"
+}
+
+###Traer un usuario por el Id
+GET http://localhost:1235/api/users/66a1c9b530d82d594bff9c1

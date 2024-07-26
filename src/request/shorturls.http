@@ -1,0 +1,23 @@
+### Recuperar todos los shorturls
+GET http://localhost:1235/api/shorturls
+
+### Un shorturls por Id
+GET http://localhost:1235/api/shorturls/66a1ad05dbfb58951a0daa80
+
+### Crear una shorturls
+POST http://localhost:1235/api/shorturls
+Content-Type: application/json
+
+{
+   "originalUrl": "http://localhost:1234/moviesTop20",
+   "isPublic": false
+}
+
+### Editar una url
+PUT http://localhost:1235/api/shorturls/66a1ad05dbfb58951a0daa80
+Content-Type: application/json
+
+{
+   "countClick": 10,
+   "isPublic": true
+}
