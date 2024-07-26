@@ -1,6 +1,8 @@
 import { ShorturlsServices } from "../services/urlServices.js";
+import {UserController} from "../controllers/user.js";
 import { generateCode, generateShortUrl } from "../middlewares/utils.js";
 import {validateShorturl} from "../schemas/shorturls.js";
+import jwt from "jsonwebtoken"
 
 export class ShorturlsController {
 
@@ -37,17 +39,25 @@ export class ShorturlsController {
       return res.status(400).json({ error: JSON.parse(result.error.message) });;
     }
     const data = result.data;
-    const code = generateCode();
-    const shortUrl = generateShortUrl(data, code);
-
     const url = await ShorturlsServices.urlExist(data);
     if(url.length > 0) return res.json({url, message: "url already exists"})
 
+    const code = generateCode();
+    const shortUrl = generateShortUrl(data, code);
+    let user = req.user ? req.user : null; 
+    //CONSEGUIMOS PROVISORIAMENTE EL USER.ID POR MEDIO DEL TOKEN HASTA QUE SOLUCIONEMOS EL PROBLEMA
+    const token = req.get("authorization")
+    if(user == null && token != undefined){
+      const decodedToken = jwt.verify(token.split(" ")[1], process.env.SECRET);
+      const username = decodedToken.username;
+      user = await UserController.getUserByUsername(username);
+    }
     //TODO: verificar que la urloriginal sea una web existente (proximo update)
     const newShorturl = await ShorturlsServices.createNewShorturl(
       data,
       code,
-      shortUrl
+      shortUrl,
+      user
     );
 
     if (newShorturl != undefined) return res.json(newShorturl);

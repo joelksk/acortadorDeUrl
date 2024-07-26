@@ -12,9 +12,8 @@ export class Middleware {
     next()
   }
 
-  static async userExtractor(req, res) {
-    const token = req.token;
-    if (token) {
+  static async userExtractor(req, res, next) {
+    if (req.token) {
       const decodedToken = jwt.verify(req.token, process.env.SECRET);
       const username = decodedToken.username;
       const user = await UserController.getUserByUsername(username);

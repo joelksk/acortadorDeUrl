@@ -18,6 +18,9 @@ const urlsSchema = new mongoose.Schema({
   },
   countClick: {
     type: Number
+  },
+  userId: { 
+    type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null
   }
 
 })
@@ -30,7 +33,7 @@ urlsSchema.set('toJSON', {
   }
 })
 
-const Urls = mongoose.model('Person', urlsSchema)
+const Urls = mongoose.model('ShortsUrl', urlsSchema)
 
 export const UrlsSchema = Urls.schema
 export default Urls

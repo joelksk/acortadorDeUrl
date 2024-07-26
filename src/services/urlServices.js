@@ -40,20 +40,21 @@ export class ShorturlsServices {
       }
     }
   
-    static async createNewShorturl(object, code, shortUrl) {
+    static async createNewShorturl(object, code, shortUrl, user) {
         try {
             const newShortUrl = new Urls({
                 originalUrl: object.originalUrl,
                 codeUrl: code,
                 isPublic: object.isPublic !== undefined ? object.isPublic : false,
                 shortUrl,
-                countClick: 0
+                countClick: 0,
+                userId: user != null ? user._id.toString() : null
             })
 
             await newShortUrl.save()
             return newShortUrl
         } catch (error) {
-            console.log("error al tratar de guardar una nueva url")
+            console.log("error al tratar de guardar una nueva url ", error)
         }
     }
 

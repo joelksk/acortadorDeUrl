@@ -2,7 +2,7 @@
 GET http://localhost:1235/api/shorturls
 
 ### recuperar una URL por Id
-GET http://localhost:1235/api/shorturls/66a2d65822d85789021ff879
+GET http://localhost:1235/api/shorturls/66a3c6fce2434fcdbe6c09b3
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imtza3BsdXNzIiwiaWQiOiI2NmExYzliNTMwZDgyZDU5NGJmZjljMWMiLCJpYXQiOjE3MjIwMDU2Njh9.q-1CJvIh064XbyFSh5zPqnvCpp0XMFyqOe-MPNeyLbI
 
 ###Redirection to original URL
@@ -11,14 +11,16 @@ GET http://localhost:1235/api/shorturls/redirect/0fb7d663187f
 ### Crear una shorturls
 POST http://localhost:1235/api/shorturls
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imtza3BsdXNzIiwiaWQiOiI2NmExYzliNTMwZDgyZDU5NGJmZjljMWMiLCJpYXQiOjE3MjIwMDU2Njh9.q-1CJvIh064XbyFSh5zPqnvCpp0XMFyqOe-MPNeyLbI
+
 
 {
-   "originalUrl": "http://localhost:1234/moviesTop20",
-   "isPublic": false
+   "originalUrl": "http://localhost:1234/moviesTop25",
+   "isPublic": true
 }
 
 ### Editar una url
-PUT http://localhost:1235/api/shorturls/66a1ad05dbfb58951a0daa80
+PUT http://localhost:1235/api/shorturls/66a3c6fce2434fcdbe6c09b3
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imtza3BsdXNzIiwiaWQiOiI2NmExYzliNTMwZDgyZDU5NGJmZjljMWMiLCJpYXQiOjE3MjIwMDU2Njh9.q-1CJvIh064XbyFSh5zPqnvCpp0XMFyqOe-MPNeyLbI
 
