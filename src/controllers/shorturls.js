@@ -40,7 +40,8 @@ export class ShorturlsController {
     }
     const data = result.data;
     const url = await ShorturlsServices.urlExist(data);
-    if(url.length > 0) return res.json({url, message: "url already exists"})
+    //TODO: Hacer que si la persona no esta registrada, hacer que devuelva una url que no tenga usuario asignado (solo para los no registrados)
+    if(url.length > 0) return res.json(url)
 
     const code = generateCode();
     const shortUrl = generateShortUrl(data, code);
@@ -67,13 +68,17 @@ export class ShorturlsController {
 
   static async updateShorturl(req, res) {
     const shortUrlToEdit = await ShorturlsServices.getShortUrlById(req.params.id)
-    console.log(req.params.id);
     if(!shortUrlToEdit) return res.status(404).json({ message: "not found"})
     
     const shortUrlEdited = await ShorturlsServices.updateShorturl(shortUrlToEdit, req.body)
     res.json(shortUrlEdited)
   }
-
+  
+  static async getUrlsByUserId(req, res) {
+    const {userId} = req.params
+    const urls = await ShorturlsServices.getUrlsByUserId(userId)
+    res.json(urls)
+  }
 }
 
 

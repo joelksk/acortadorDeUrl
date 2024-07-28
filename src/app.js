@@ -1,20 +1,17 @@
 import express, { json } from 'express';
 import { shorturlsRouter } from './routes/shorturls.js';
-import {Middleware} from './middlewares/middleware.js'
 import {userRouter} from './routes/user.js';
 import {loginRouter} from './routes/login.js';
 import {corsMiddleware} from './middlewares/cors.js'
+import path from 'path'
+import { fileURLToPath } from 'url';
 import 'dotenv/config'
 import mongoose from 'mongoose';
 const app = express();
 
-
-// DO NOT SAVE YOUR PASSWORD TO GITHUB!!
-const url = process.env.MONGODB_URI
-
 mongoose.set('strictQuery',false)
 console.log('conecting to Database...');
-mongoose.connect(url)
+mongoose.connect(process.env.MONGODB_URI)
     .then(result => {
         console.log('connected to MongoDB')
     })
@@ -26,6 +23,10 @@ app.disable('x-powered-by');
 app.use(json());
 app.use(corsMiddleware());
 
+//PRUEBA PARA EL HTML BASICO
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+// app.use(express.static(path.join(__dirname, 'public')));
 
 //routes of shoeturls
 app.use("/api/shorturls", shorturlsRouter);

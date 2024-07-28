@@ -1,7 +1,6 @@
 import Urls from '../models/mongodb/shorturlsModels.js'
 
 export class ShorturlsServices {
-    //TODO: NO OLVIDAR ENCERRAR TODO EN LOS TRY_CATCH
 
     static async getAll() {
         try {
@@ -60,15 +59,7 @@ export class ShorturlsServices {
 
     static async updateShorturl(shortUrlToEdit, shortUrlEdited) {
       try {
-          const shortUrl = {
-            originalUrl: shortUrlEdited.originalUrl === undefined ? shortUrlToEdit.originalUrl : shortUrlEdited.originalUrl,
-            codeUrl: shortUrlEdited.codeUrl === undefined ? shortUrlToEdit.codeUrl : shortUrlEdited.codeUrl,
-            isPublic: shortUrlEdited.isPublic === undefined ? shortUrlToEdit.isPublic : shortUrlEdited.isPublic,
-            shortUrl: shortUrlEdited.shortUrl === undefined ? shortUrlToEdit.shortUrl : shortUrlEdited.shortUrl,
-            countClick: shortUrlEdited.countClick === undefined ? shortUrlToEdit.countClick : shortUrlEdited.countClick
-          }
-
-        const  shortUrlSaved = await Urls.findByIdAndUpdate(shortUrlToEdit.id, shortUrl, {new: true})
+        const  shortUrlSaved = await Urls.findByIdAndUpdate(shortUrlToEdit.id, shortUrlEdited, {new: true})
         return shortUrlSaved
 
       } catch (error) {
@@ -82,6 +73,15 @@ export class ShorturlsServices {
         return shortUrl
       } catch (error) {
         console.log("Error al intentar obtener la url por el codigo" , error);
+      }
+    }
+
+    static async getUrlsByUserId(userId){
+      try {
+        const urls = await Urls.find({userId: userId})
+        return urls
+      } catch (error) {
+        console.log("Error al intentar obtener las urls por el id del usuario" , error);
       }
     }
   

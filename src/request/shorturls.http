@@ -22,9 +22,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imtza
 ### Editar una url
 PUT http://localhost:1235/api/shorturls/66a3c6fce2434fcdbe6c09b3
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imtza3BsdXNzIiwiaWQiOiI2NmExYzliNTMwZDgyZDU5NGJmZjljMWMiLCJpYXQiOjE3MjIwMDU2Njh9.q-1CJvIh064XbyFSh5zPqnvCpp0XMFyqOe-MPNeyLbI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imtza3BsdXNzIiwiaWQiOiI2NmExYzliNTMwZDgyZDU5NGJmZjljMWMiLCJpYXQiOjE3MjIwMDU2Njh9.q-1CJvIh064XbyFSh5zPqnvCpp0XMFyqOe-MPNeyLio
 
 {
-   "countClick": 100,
-   "isPublic": true
+   "countClick": 200,
+   "isPublic": false
 }

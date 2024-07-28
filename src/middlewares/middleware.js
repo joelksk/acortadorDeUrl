@@ -13,14 +13,22 @@ export class Middleware {
   }
 
   static async userExtractor(req, res, next) {
-    if (req.token) {
-      const decodedToken = jwt.verify(req.token, process.env.SECRET);
-      const username = decodedToken.username;
-      const user = await UserController.getUserByUsername(username);
-      if (user) {
-        req.user = user;
+    try {
+      if (req.token) {
+        const decodedToken = jwt.verify(req.token, process.env.SECRET);
+        const username = decodedToken.username;
+        const user = await UserController.getUserByUsername(username);
+        if (user) {
+          req.user = user;
+        }
+      }
+      next()
+    } catch (error) {
+      if (error.name ===  'JsonWebTokenError') {
+        return res.status(401).json({ error: 'token invalid' })
+      }else{
+        res.status(500).json({error: "Server error..."})
       }
     }
-    next()
   }
 }

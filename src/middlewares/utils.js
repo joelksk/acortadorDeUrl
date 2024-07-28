@@ -2,6 +2,7 @@ import { Guid } from 'js-guid';
 import { ShorturlsServices } from '../services/urlServices.js';
 import 'dotenv/config'
 
+//TODO: Pensar como hacer para que la url base sea la del frontend
 const shortBase = process.env.SHORT_BASE
 
 export const generateCode =  () => {
