@@ -1,8 +1,0 @@
-### Logguear al usuario
-POST http://localhost:1235/api/login
-Content-Type: application/json
-
-{
-  "username": "kskpluss",
-  "password": "ksk123"
-}
