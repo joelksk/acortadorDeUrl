@@ -49,7 +49,7 @@ export class ShorturlsServices {
                 countClick: 0,
                 userId: user != null ? user._id.toString() : null
             })
-
+            
             await newShortUrl.save()
             return newShortUrl
         } catch (error) {
@@ -82,6 +82,15 @@ export class ShorturlsServices {
         return urls
       } catch (error) {
         console.log("Error al intentar obtener las urls por el id del usuario" , error);
+      }
+    }
+
+    static async deleteShortUrl(urlId){
+      try {
+        const res = await Urls.deleteOne({_id: urlId})
+        return res
+      } catch (error) {
+        console.log('Error al tratar de eliminar la url por id')
       }
     }
   

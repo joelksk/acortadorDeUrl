@@ -14,4 +14,4 @@ shorturlsRouter.get("/redirect/:codeUrl", ShorturlsController.redirectToOriginal
 //PRIVATE ROUTES
 shorturlsRouter.put("/:id", Middleware.tokenExtractor, Middleware.userExtractor, ShorturlsController.updateShorturl)
 shorturlsRouter.get("/:id", Middleware.tokenExtractor, Middleware.userExtractor, ShorturlsController.getShortUrlById);
-//TODO: shorturlsRouter.delete("/:id", Middleware.tokenExtractor, Middleware.userExtractor, ShorturlsController.deleteUrlById);
+shorturlsRouter.delete("/:id", Middleware.tokenExtractor, Middleware.userExtractor, ShorturlsController.deleteUrlById);

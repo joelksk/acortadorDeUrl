@@ -79,6 +79,19 @@ export class ShorturlsController {
     const urls = await ShorturlsServices.getUrlsByUserId(userId)
     res.json(urls)
   }
+
+  static async deleteUrlById(req, res) {
+    const urlId = req.params.id
+    const shortUrltoDelete = await ShorturlsServices.getShortUrlById(urlId)
+    if(!shortUrltoDelete) return res.status(404).json({ message: "not found"})
+    const response = await ShorturlsServices.deleteShortUrl(urlId)
+    if(response.deletedCount == 1){
+      res.status(200).json({ message: 'Url had been deleted correctly'})
+    } else{
+      res.status(500).json({message: 'hubo un error en el servidor'})
+    }
+    
+  }
 }
 
 
