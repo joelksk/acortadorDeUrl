@@ -30,9 +30,9 @@ export class ShorturlsServices {
         }
     }
     
-    static async urlExist({originalUrl}){
+    static async urlExist({originalUrl}, userId){
       try {
-        const result = await Urls.find({originalUrl: originalUrl})
+        const result = await Urls.find({originalUrl: originalUrl, userId: userId});
         return result
       } catch (error) {
         console.log("Error al intentar verificar si la Url enviada por el usuario existe en la bd");

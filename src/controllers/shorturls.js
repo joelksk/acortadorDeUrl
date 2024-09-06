@@ -38,14 +38,12 @@ export class ShorturlsController {
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });;
     }
-    const data = result.data;
-    const url = await ShorturlsServices.urlExist(data);
-    //TODO: Hacer que si la persona no esta registrada, hacer que devuelva una url que no tenga usuario asignado (solo para los no registrados)
-    if(url.length > 0) return res.json(url)
-
+    let data = result.data;
+  
     const code = generateCode();
     const shortUrl = generateShortUrl(data, code);
-    let user = req.user ? req.user : null; 
+    let user = req.user ? req.user : null;
+
     //CONSEGUIMOS PROVISORIAMENTE EL USER.ID POR MEDIO DEL TOKEN HASTA QUE SOLUCIONEMOS EL PROBLEMA
     const token = req.get("authorization")
     if(user == null && token != undefined){
@@ -53,7 +51,15 @@ export class ShorturlsController {
       const username = decodedToken.username;
       user = await UserController.getUserByUsername(username);
     }
-    //TODO: verificar que la urloriginal sea una web existente (proximo update)
+
+    if(user != null){
+      const url = await ShorturlsServices.urlExist(data, user.id);
+      console.log(url);
+      if(url.length > 0){
+        return res.status(400).json({urlExist: "The URL is already archived."})
+      }
+    }
+
     const newShorturl = await ShorturlsServices.createNewShorturl(
       data,
       code,
@@ -88,7 +94,7 @@ export class ShorturlsController {
     if(response.deletedCount == 1){
       res.status(200).json({ message: 'Url had been deleted correctly'})
     } else{
-      res.status(500).json({message: 'hubo un error en el servidor'})
+      res.status(500).json({message: 'Internal Server Error'})
     }
     
   }
