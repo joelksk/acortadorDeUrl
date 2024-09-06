@@ -10,9 +10,6 @@ const urlsSchema = new mongoose.Schema({
   codeUrl: {
     type: String
   },
-  isPublic: {
-    type: Boolean
-  },
   shortUrl: {
     type: String
   },

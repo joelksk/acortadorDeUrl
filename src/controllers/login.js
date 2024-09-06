@@ -11,7 +11,7 @@ export class LoginController {
       user === null ? false : await bcrypt.compare(password, user.passwordHash);
 
     if (!user || !passCorrect) {
-      return res.status(401).json({
+      return res.status(400).json({
         error: "invalid username or password",
       });
     }

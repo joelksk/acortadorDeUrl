@@ -44,7 +44,6 @@ export class ShorturlsServices {
             const newShortUrl = new Urls({
                 originalUrl: object.originalUrl,
                 codeUrl: code,
-                isPublic: object.isPublic !== undefined ? object.isPublic : false,
                 shortUrl,
                 countClick: 0,
                 userId: user != null ? user._id.toString() : null
