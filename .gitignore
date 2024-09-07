@@ -25,4 +25,3 @@ src/request
 *.sln
 *.sw?
 .env
-src/public

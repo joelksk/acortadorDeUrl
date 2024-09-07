@@ -23,14 +23,22 @@ app.disable('x-powered-by');
 app.use(json());
 app.use(corsMiddleware());
 
-//PRUEBA PARA EL HTML BASICO
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-// app.use(express.static(path.join(__dirname, 'public')));
+// Obtén la ruta del directorio actual (__dirname en ESM)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Servir los archivos estáticos del frontend (Next.js)
+app.use(express.static(path.join(__dirname, 'public')));  // Cambia 'out' si los archivos están en otra carpeta
+
 
 //routes of shoeturls
 app.use("/api/shorturls", shorturlsRouter);
 app.use("/api/users", userRouter);
 app.use("/api/login", loginRouter);
+
+// Cualquier otra ruta devolverá el archivo index.html (del frontend)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Cambia 'out' si moviste los archivos
+  });
 
 export default app
