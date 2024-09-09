@@ -3,8 +3,7 @@ import cors from 'cors'
 export const corsMiddleware = () => cors({
     origin: (origin, callback) => {
         const ACCEPTED_ORIGINS = [
-            'https://linkly-obag.onrender.com/',
-            '*'
+            'https://linkly-obag.onrender.com'
         ]
 
         if(ACCEPTED_ORIGINS.includes(origin)) {
