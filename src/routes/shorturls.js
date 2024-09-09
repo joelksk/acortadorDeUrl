@@ -8,7 +8,7 @@ export const shorturlsRouter = Router();
 //PUBLIC ROUTES
 shorturlsRouter.get("/", ShorturlsController.getAllShorturls);
 shorturlsRouter.post("/", ShorturlsController.createNewShorturl);
-shorturlsRouter.get("/redirect/:codeUrl", ShorturlsController.redirectToOriginalUrl);
+shorturlsRouter.get("/:codeUrl", ShorturlsController.redirectToOriginalUrl);
 
 
 //PRIVATE ROUTES
