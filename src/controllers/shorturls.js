@@ -22,6 +22,7 @@ export class ShorturlsController {
 
   static async redirectToOriginalUrl(req, res){
     const {codeUrl} = req.params
+    
     const shortUrl = await ShorturlsServices.getShortUrlByCodeUrl(codeUrl)
     if(shortUrl){
       const urlEdited = {countClick: shortUrl.countClick+1}
@@ -44,17 +45,8 @@ export class ShorturlsController {
     const shortUrl = generateShortUrl(data, code);
     let user = req.user ? req.user : null;
 
-    //CONSEGUIMOS PROVISORIAMENTE EL USER.ID POR MEDIO DEL TOKEN HASTA QUE SOLUCIONEMOS EL PROBLEMA
-    const token = req.get("authorization")
-    if(user == null && token != undefined){
-      const decodedToken = jwt.verify(token.split(" ")[1], process.env.SECRET);
-      const username = decodedToken.username;
-      user = await UserController.getUserByUsername(username);
-    }
-
     if(user != null){
       const url = await ShorturlsServices.urlExist(data, user.id);
-      console.log(url);
       if(url.length > 0){
         return res.status(400).json({urlExist: "The URL is already archived."})
       }
@@ -67,9 +59,9 @@ export class ShorturlsController {
       user
     );
 
-    if (newShorturl != undefined) return res.json(newShorturl);
+    if (newShorturl != undefined) return res.status(201).json(newShorturl);
 
-    res.status(404).json({ message: "The url was not create" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 
   static async updateShorturl(req, res) {

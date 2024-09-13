@@ -12,6 +12,26 @@ export class Middleware {
     next()
   }
 
+  static async optionalTokenExtractor(req, res, next) {
+    const token = req.get("authorization")?.split(' ')[1];
+    if (!token) {
+        req.user = null;
+        return next();
+    }
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRET);
+        const username = decodedToken.username;
+        const user = await UserController.getUserByUsername(username);
+        if (user) {
+          req.user = user;
+        }
+    } catch (error) {
+        req.user = null;
+    }
+
+    next();
+  }
+
   static async userExtractor(req, res, next) {
     try {
       if (req.token) {

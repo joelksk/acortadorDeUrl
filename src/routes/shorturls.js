@@ -6,12 +6,13 @@ export const shorturlsRouter = Router();
 
 
 //PUBLIC ROUTES
-shorturlsRouter.get("/", ShorturlsController.getAllShorturls);
-shorturlsRouter.post("/", ShorturlsController.createNewShorturl);
+shorturlsRouter.get("/api/shorturls", ShorturlsController.getAllShorturls);
+shorturlsRouter.post("/api/shorturls",Middleware.optionalTokenExtractor, ShorturlsController.createNewShorturl);
 shorturlsRouter.get("/:codeUrl", ShorturlsController.redirectToOriginalUrl);
 
 
+
 //PRIVATE ROUTES
-shorturlsRouter.put("/:id", Middleware.tokenExtractor, Middleware.userExtractor, ShorturlsController.updateShorturl)
-shorturlsRouter.get("/:id", Middleware.tokenExtractor, Middleware.userExtractor, ShorturlsController.getShortUrlById);
-shorturlsRouter.delete("/:id", Middleware.tokenExtractor, Middleware.userExtractor, ShorturlsController.deleteUrlById);
+shorturlsRouter.put("/api/shorturls/:id", Middleware.tokenExtractor, Middleware.userExtractor, ShorturlsController.updateShorturl)
+shorturlsRouter.get("/api/shorturls/:id", Middleware.tokenExtractor, Middleware.userExtractor, ShorturlsController.getShortUrlById);
+shorturlsRouter.delete("/api/shorturls/:id", Middleware.tokenExtractor, Middleware.userExtractor, ShorturlsController.deleteUrlById);

@@ -27,18 +27,18 @@ app.use(corsMiddleware());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Servir los archivos estáticos del frontend (Next.js)
-app.use(express.static(path.join(__dirname, 'public')));  // Cambia 'out' si los archivos están en otra carpeta
-
-
 //routes of shoeturls
-app.use("/api/shorturls", shorturlsRouter);
 app.use("/api/users", userRouter);
 app.use("/api/login", loginRouter);
+
+app.use("/", shorturlsRouter);
+
+// Servir los archivos estáticos del frontend (Next.js)
+app.use(express.static(path.join(__dirname, 'public')));  // Cambia 'out' si los archivos están en otra carpeta
 
 // Cualquier otra ruta devolverá el archivo index.html (del frontend)
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html')); // Cambia 'out' si moviste los archivos
-  });
+});
 
 export default app
