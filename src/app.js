@@ -31,10 +31,9 @@ const __dirname = path.dirname(__filename);
 app.use("/api/users", userRouter);
 app.use("/api/login", loginRouter);
 
-app.use("/", shorturlsRouter);
-
 // Servir los archivos estáticos del frontend (Next.js)
 app.use(express.static(path.join(__dirname, 'public')));  // Cambia 'out' si los archivos están en otra carpeta
+app.use("/", shorturlsRouter);
 
 // Cualquier otra ruta devolverá el archivo index.html (del frontend)
 app.get('*', (req, res) => {
