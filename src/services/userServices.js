@@ -43,5 +43,12 @@ export class UserServices {
         }
     }
 
-    
+    static async deleteUser(userId){
+        try {
+          const res = await User.deleteOne({_id: userId})
+          return res
+        } catch (error) {
+          console.log('Error al tratar de eliminar el Usuario por id')
+        }
+      }
 }

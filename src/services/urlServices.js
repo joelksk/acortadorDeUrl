@@ -92,5 +92,14 @@ export class ShorturlsServices {
         console.log('Error al tratar de eliminar la url por id')
       }
     }
+
+    static async deleteAllUrlsByUserId (userId) {
+      try {
+        const res = await Urls.deleteMany({userId: userId})
+        return res
+      } catch (error) {
+        console.log('Error al tratar de eliminar las url del usuario que elimino la cuenta')
+      }
+    }
   
   } 

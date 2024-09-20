@@ -12,4 +12,4 @@ userRouter.post("/", UserController.createNewUser);
 //PRIVATES ROUTES
 userRouter.get("/:id", Middleware.tokenExtractor, Middleware.userExtractor, UserController.getUserById);
 userRouter.get("/:userId/urls", Middleware.tokenExtractor, Middleware.userExtractor, ShorturlsController.getUrlsByUserId)
-//TODO: userRouter.delete("/:id", MovieController.deleteMovie)
+userRouter.delete("/:id", Middleware.tokenExtractor, Middleware.userExtractor, UserController.deleteUserById)

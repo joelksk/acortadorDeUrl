@@ -1,4 +1,5 @@
 import { UserServices } from "../services/userServices.js";
+import { ShorturlsServices } from "../services/urlServices.js";
 import bcrypt from "bcrypt";
 
 export class UserController {
@@ -45,5 +46,18 @@ export class UserController {
     static async getUserByUsername(username) {
         const user = await UserServices.getUserByUsername(username)
         return user
+    }
+
+    static async deleteUserById(req, res){
+        const {id} = req.params;
+        const userToDelete = await UserServices.getUserById(id)
+        if(!userToDelete) return res.status(404).json({ message: "User not found"})
+            const response = await UserServices.deleteUser(id)
+            if(response.deletedCount == 1){
+                ShorturlsServices.deleteAllUrlsByUserId(id)
+                res.status(200).json({ message: 'User has been deleted successfully'})
+            } else{
+                res.status(500).json({message: 'Internal Server Error'})
+            }
     }
 }
