@@ -23,6 +23,7 @@
 
 - **Editar una URL**: Si creaste una cuenta, puedes editar cualquier URL previamente acortada desde tu panel de usuario.
 - **Ver estadísticas**: Monitorea la cantidad de clics que ha recibido cada enlace desde tu cuenta.
+- **Generación de códigos QR: Ahora puedes generar un código QR para cada URL acortada. Simplemente haz clic en el icono de QR debajo de tu enlace acortado para obtener un código QR que puedes descargar en formato PNG o JPEG. 
 
 ## 🛠 Tecnologías utilizadas
 
