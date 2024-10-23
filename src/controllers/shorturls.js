@@ -2,6 +2,7 @@ import { ShorturlsServices } from "../services/urlServices.js";
 import {UserController} from "../controllers/user.js";
 import { generateCode, generateShortUrl } from "../middlewares/utils.js";
 import {validateShorturl} from "../schemas/shorturls.js";
+import {checkUrlSafety} from '../middlewares/utils.js'
 import jwt from "jsonwebtoken"
 
 export class ShorturlsController {
@@ -35,6 +36,7 @@ export class ShorturlsController {
   }
 
   static async createNewShorturl(req, res) {
+
     const result = validateShorturl(req.body);
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error.message) });;
@@ -48,8 +50,14 @@ export class ShorturlsController {
     if(user != null){
       const url = await ShorturlsServices.urlExist(data, user.id);
       if(url.length > 0){
-        return res.status(400).json({urlExist: "The URL is already archived."})
+        return res.status(400).json({urlExist: "La Url ya esta en el historial."})
       }
+    }
+
+    // Verificamos que la url ingresada no sea maliciosa con Google Safe Browser
+    const safetyCheck = await checkUrlSafety(data);
+    if (Object.entries(safetyCheck).length !== 0) {
+      if(safetyCheck.matches.length > 0)  return res.status(403).json({ dangerUrl: "La URL no es posible guardarla." });
     }
 
     const newShorturl = await ShorturlsServices.createNewShorturl(
