@@ -15,14 +15,14 @@ export class UserController {
             return res.status(400).json({ error: 'content missing' })
             }
             if(password.length <= 3) {
-                return res.status(400).json({ error: 'password mus not be under 3 lenght' })
+                return res.status(400).json({ error: 'La contraseña debe tener mas de 3 caracteres.' })
             }
         
         const users = await UserServices.getAll()
         let userFilter = users.filter(u => u.username === username)
-        if(userFilter.length > 0) return res.status(400).json({ error: 'Username has already in use'})
+        if(userFilter.length > 0) return res.status(400).json({ error: 'Username en uso, elija otro.'})
         userFilter = users.filter(u => u.email === email)
-        if(userFilter.length > 0) return res.status(400).json({ error: 'Email has already in use'})
+        if(userFilter.length > 0) return res.status(400).json({ error: 'Email en uso, elija otro.'})
         const saltRounds = 10;
         const passwordHash = await bcrypt.hash(password, saltRounds);
 
@@ -40,7 +40,7 @@ export class UserController {
         const {id} = req.params;
         const user = await UserServices.getUserById(id);
         if(user) return res.json(user)
-            res.status(404).json({message: "User not found"})
+            res.status(404).json({message: "Usuario no encontrado"})
     }
 
     static async getUserByUsername(username) {
@@ -51,11 +51,11 @@ export class UserController {
     static async deleteUserById(req, res){
         const {id} = req.params;
         const userToDelete = await UserServices.getUserById(id)
-        if(!userToDelete) return res.status(404).json({ message: "User not found"})
+        if(!userToDelete) return res.status(404).json({ message: "Usuario no encontrado"})
             const response = await UserServices.deleteUser(id)
             if(response.deletedCount == 1){
                 ShorturlsServices.deleteAllUrlsByUserId(id)
-                res.status(200).json({ message: 'User has been deleted successfully'})
+                res.status(200).json({ message: 'Usuario eliminado correctamente'})
             } else{
                 res.status(500).json({message: 'Internal Server Error'})
             }

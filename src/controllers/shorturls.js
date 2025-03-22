@@ -1,9 +1,7 @@
 import { ShorturlsServices } from "../services/urlServices.js";
-import {UserController} from "../controllers/user.js";
 import { generateCode, generateShortUrl } from "../middlewares/utils.js";
 import {validateShorturl} from "../schemas/shorturls.js";
 import {checkUrlSafety} from '../middlewares/utils.js'
-import jwt from "jsonwebtoken"
 
 export class ShorturlsController {
 
@@ -18,7 +16,7 @@ export class ShorturlsController {
     if (url) {
       return res.json(url)
     }
-    res.status(404).json({ message: "url not found" });
+    res.status(404).json({ message: "url no encontrada" });
   }
 
   static async redirectToOriginalUrl(req, res){
@@ -31,7 +29,7 @@ export class ShorturlsController {
       return res.redirect(shortUrl.originalUrl);
     }
     else{
-      return res.status(404).json({ message: "Url not found"})
+      return res.status(404).json({ message: "Url no encontrada"})
     }
   }
 
@@ -51,6 +49,20 @@ export class ShorturlsController {
       const url = await ShorturlsServices.urlExist(data, user.id);
       if(url.length > 0){
         return res.status(400).json({urlExist: "La Url ya esta en el historial."})
+      }
+    }
+
+    //Si la url esta en la bd y no tiene usuario registrado, devolvemos el mismo acortador
+    if(user === null){
+      const url = await ShorturlsServices.urlInBd(data);
+      if(url.length > 0 && url[0].userId == null){
+        const urlGeneral = {
+          originalUrl: url[0].originalUrl,
+          code: url[0].code,
+          shortUrl : url[0].shortUrl,
+          user: url[0].user
+        }
+        return res.status(201).json(urlGeneral)
       }
     }
 
@@ -92,7 +104,7 @@ export class ShorturlsController {
     if(!shortUrltoDelete) return res.status(404).json({ message: "not found"})
     const response = await ShorturlsServices.deleteShortUrl(urlId)
     if(response.deletedCount == 1){
-      res.status(200).json({ message: 'Url had been deleted correctly'})
+      res.status(200).json({ message: 'Url eliminada correctamente'})
     } else{
       res.status(500).json({message: 'Internal Server Error'})
     }

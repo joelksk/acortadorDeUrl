@@ -102,4 +102,12 @@ export class ShorturlsServices {
       }
     }
   
-  } 
+    static async urlInBd ({originalUrl})  {
+        try {
+          const result = await Urls.find({originalUrl: originalUrl});
+          return result
+        } catch (error) {
+          console.log("Error al intentar verificar si la Url enviada por el usuario existe en la bd");
+        }
+      }
+    }

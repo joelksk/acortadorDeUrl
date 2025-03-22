@@ -2,8 +2,8 @@ import z from 'zod'
 
 const shorturlsSchema = z.object({
     originalUrl: z.string().url({
-        required_error: "The Url is required",
-        message: "The Url must be a valid Url"
+        required_error: "La Url debe ser ingresada.",
+        message: "La Url ingresada debe ser valida."
     })
 })
 

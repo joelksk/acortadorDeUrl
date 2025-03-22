@@ -12,7 +12,7 @@ export class LoginController {
 
     if (!user || !passCorrect) {
       return res.status(400).json({
-        error: "invalid username or password",
+        error: "Usuario y/o contraseña incorrecta.",
       });
     }
 
