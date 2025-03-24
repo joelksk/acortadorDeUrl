@@ -2,11 +2,13 @@ import express, { json } from 'express';
 import { shorturlsRouter } from './routes/shorturls.js';
 import {userRouter} from './routes/user.js';
 import {loginRouter} from './routes/login.js';
+import { maliciousListRouter } from './routes/maliciousList.js';
 import {corsMiddleware} from './middlewares/cors.js'
 import path from 'path'
 import { fileURLToPath } from 'url';
 import 'dotenv/config'
 import mongoose from 'mongoose';
+import '../src/middlewares/rutine.js'
 const app = express();
 
 mongoose.set('strictQuery',false)
@@ -30,6 +32,7 @@ const __dirname = path.dirname(__filename);
 //routes of shoeturls
 app.use("/api/users", userRouter);
 app.use("/api/login", loginRouter);
+app.use("/api", maliciousListRouter)
 
 // Servir los archivos estáticos del frontend (Next.js)
 app.use(express.static(path.join(__dirname, 'public')));  // Cambia 'out' si los archivos están en otra carpeta
@@ -39,5 +42,6 @@ app.use("/", shorturlsRouter);
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html')); // Cambia 'out' si moviste los archivos
 });
+
 
 export default app
