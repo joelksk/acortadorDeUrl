@@ -6,7 +6,7 @@ import { analyzeUrl, getAnalysisResult } from './analyzeVT.js';
 const QUOTE_PER_DAY = 500
 const TIME=15000
 const ONE_DAY = 24 * 60 * 60 * 1000;
-const DAY_OF_ANALIZE="00 00 * * 2" // TODOS LOS MARTES A LAS 00 HS
+const DAY_OF_ANALIZE="00 01 * * 2" // TODOS LOS MARTES A LAS 00 HS
 
 // Revisar todas las URLs cada domingo a las 3 AM
 cron.schedule(DAY_OF_ANALIZE, async () => {
